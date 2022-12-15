@@ -1,0 +1,17 @@
+body{
+    text-align: center;
+    background-color: bisque;
+}
+
+.grid{
+    background-color: aquamarine;
+    display: flex;
+    flex-wrap: wrap;
+    width: 400px;
+    height: 400px;
+}
+
+img{
+    width: 100px;
+    height: 100px;
+}
