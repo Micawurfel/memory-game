@@ -69,12 +69,13 @@ let grid = document.querySelector('.grid')
 let score = document.querySelector('.score')
 let time = document.querySelector('.time')
 
-const cardChosen = []
-const cardChosenId = []
-const cardsWon = []
+let cardChosen = []
+let cardChosenId = []
+let cardsWon = []
 
 
 cards.sort (()=> Math.random() - 0.5 );
+
 console.log(cards)
 
 //create the board
@@ -85,58 +86,53 @@ function createBoard(){
         card.setAttribute('data-id', i);
         grid.appendChild(card);
 
+        // flip card
         card.onclick = () => {
-
-            // flip card
-
-            let cardID = card.getAttribute('data-id');
-            cardChosen.push(cards[cardID].name);
+            const cardID = card.getAttribute('data-id');
+            cardChosen.push(cards[cardID].animal);
             cardChosenId.push(cardID);
             card.setAttribute('src', cards[cardID].img);
-            
+
             if (cardChosen.length === 2) {
-                setTimeout (checkForMatch(), 500)
+                setTimeout (checkForMatch, 500)
             }
 
             console.log(cardID)
+            console.log(cardChosen)
+            console.log(cardChosenId)
         }
-    }
-        
+    }    
 }
-
-createBoard();
-
 
 //check for matches
 
-let card = document.querySelectorAll('img');
-
 function checkForMatch() {
 
+    let card = document.querySelectorAll('img');
     const firstCard = cardChosenId[0];
     const secondCard = cardChosenId[1];
 
-    if (firstCard === secondCard){
+    if (cardChosen[0].animal === cardChosen[1].animal){
         alert("Match");
         card[firstCard].setAttribute('src', "media/white.jpg");
         card[secondCard].setAttribute('src', "media/white.jpg");
         cardsWon.push(cardChosen);
-    } else {
+        
+    } else if (cardChosenId[0].animal != cardChosenId[1].animal){
         card[firstCard].setAttribute('src', "media/back.jpg");
         card[secondCard].setAttribute('src', "media/back.jpg");
         alert ("try again");
+    } else {
+        alert("error")
     }
 
-    cardChosen = []
-    cardChosenId = []
+    cardChosen = [];
+    cardChosenId = [];
 
-    // score.textContent = cardsWon.length;
-    // if (cardsWon.length = cards.length/2){
-    //     score.textContent = "congratulations!"
-    // }
+    score.textContent = cardsWon.length;
+    if (cardsWon.length === cards.length/2){
+        score.textContent = "congratulations!"
+    }
 }
 
-
-console.log(cardChosen)
-console.log(cardChosenId)
-
+createBoard();
